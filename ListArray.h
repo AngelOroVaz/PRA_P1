@@ -1,4 +1,4 @@
-#ifndef LISTARRAY_H
+#define LISTARRAY_H
 #define LISTARRAY_h
 
 #include <ostream>
@@ -6,7 +6,7 @@
 #include <stdexcept>
 
 template <typename T>
-class ListArray : public List<T>
+class ListArray : public List<T>{
 		  private:
 			  T* arr;
 			  int max;
@@ -18,8 +18,19 @@ class ListArray : public List<T>
 				  
 		  
 		   public:
-		   	  void insert(int pos,T e) override {
-				 if (pos < 0 || pso > n){
+		   	  int size_;
+			ListArray(){
+				T arr[MINSIZE] =} 
+			}
+			~ListArray();{
+				delete[] arr;
+			}
+
+			
+			  int size() const {
+				  return size_;
+			  void insert(int pos,T e) override {
+				 if (pos < 0 || pos > n){
 					throw std::out_of_range("Posicion invalida en insert()");
 				 }
 				 if (n == max){
@@ -37,8 +48,11 @@ class ListArray : public List<T>
 			void prepend(T e) override {
 				insert(0, e);
 			}
-			ListArray(){
-				T arr[MINISIZE] = 
-			~ListArray(){
-				delete arr[];
+			T operator[] (int pos){
+				if(pos < 0 || pos > size()-1){
+					throw std::out_of_range("Posicion fuera del rango valido");		                   }
+				return pos;
 			}
+			template <typename U>
+			friend std::ostream&operator<<(std::ostream&out, const ListArray<U>&list);
+};
