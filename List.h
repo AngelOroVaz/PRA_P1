@@ -4,6 +4,7 @@
 template <typename T>
 class List {
 	public:
+		virtual T operator[](int pos) const = 0;
 		virtual ~List() = default;
 		virtual void insert(int pos, T e) = 0;
 		virtual void append(T e) = 0;
