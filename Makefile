@@ -15,5 +15,11 @@ bin/testPoint2D: testPoint2D.cpp Point2D.o
 	g++ -o bin/testPoint2D testPoint2D.o Point2D.o
 Shape.o: Shape.cpp Shape.h Point2D.h
 	g++ -c Shape.cpp
+Circle.o: Circle.cpp Circle.h Shape.h Point2D.h
+	g++ -C Circle.cpp
+bin/testCircle: testCircle.cpp Circle.o Shape.o Point2D.o
+	g++ -c testCircle.cpp
+	mkdir -p bin
+	g++ -o bin/testCircle testCircle.o Circle.o Shape.o Point2D.o
 clean:
 	rm -r *.o *.gch bin
