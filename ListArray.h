@@ -1,5 +1,5 @@
 #ifndef LISTARRAY_H
-#define LISTARRAY_h
+#define LISTARRAY_H
 
 #include <ostream>
 #include "List.h"
@@ -25,7 +25,7 @@ class ListArray : public List<T>{
 				  
 		  
 		   public:
-			ListArray(){
+			  ListArray(){
 				arr = new T[MINSIZE];
 				max = MINSIZE;
 				n = 0;
@@ -39,7 +39,7 @@ class ListArray : public List<T>{
 			  int size() const override {
 				  return n;
 			  }
-			  void insert(int pos,T e) override {
+			  void insert(int pos, T e) override {
 				 if (pos < 0 || pos > n){
 					throw std::out_of_range("Posicion invalida en insert()");
 				 }
@@ -58,19 +58,30 @@ class ListArray : public List<T>{
 			void prepend(T e) override {
 				insert(0, e);
 			}
-			T operator[] (int pos) override{
-				if(pos < 0 || pos >= n){
+			virtual T operator[] (int pos) const override{
+				if(pos < 0 || pos >= this->size()){
 					throw std::out_of_range("Posicion fuera del rango valido");		                   }
-				return arr[pos];
+				return this->arr[pos];
+			}
+			T remove(int pos) override {
+				if (pos < 0 || pos >= n) {
+					throw std::out_of_range("Posicion fuera de rango en remove()");
+				}
+				T removed = arr[pos];
+				for (int i = pos; i < n - 1; ++i) {
+					arr[i] = arr[i + 1];
+				}
+				--n;
+				return removed;
 			}
 			template <typename U>
-			friend std::ostream&operator<<(std::ostream&out, const ListArray<U>&list);
+			friend std::ostream& operator<<(std::ostream& out, const ListArray<U>& list);
 };
 template <typename T>
 std::ostream& operator<<(std::ostream& out, const ListArray<T>& list) {
 	out << "[";
 	for (int i = 0; i < list.size(); i++) {
-		out << list.arr[i];
+		out << list[i];
 		if (i < list.size() - 1) out << ", ";
 	}
 	out << "]";
